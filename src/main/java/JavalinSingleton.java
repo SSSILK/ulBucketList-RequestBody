@@ -13,6 +13,7 @@ public class JavalinSingleton {
     public static Javalin getInstance(){
         Javalin app = Javalin.create();
         ObjectMapper om = new ObjectMapper();
+     
         
         /**
          * problem1: retrieve the song object from the request body...
@@ -21,6 +22,9 @@ public class JavalinSingleton {
          * Note: Please refer to the "RequestBody.MD" file for more assistance.
          */
         app.post("/echo", ctx -> {
+           String json =  ctx.body();
+           Song song = om.readValue(json, Song.class);
+           ctx.json(song);
             
             //implement logic here
                 
@@ -36,7 +40,10 @@ public class JavalinSingleton {
         app.post("/changeartisttobeatles", ctx -> {
 
             //implement logic here
-               
+               String json = ctx.body();
+               Song song = om.readValue(json, Song.class);
+               song.setArtistName("Beatles");
+               ctx.json(song);
         });
 
 
